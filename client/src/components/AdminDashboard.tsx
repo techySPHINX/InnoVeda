@@ -126,6 +126,9 @@ export default function AdminDashboard() {
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm" onClick={() => console.log('Logout clicked')}>
+                🏠 Home
+              </Button>
               <Button variant="outline">
                 <Settings className="h-4 w-4 mr-2" />
                 Settings

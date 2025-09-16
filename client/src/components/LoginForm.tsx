@@ -10,9 +10,10 @@ import { Leaf, ArrowLeft } from "lucide-react";
 interface LoginFormProps {
   userType: 'patient' | 'doctor' | 'admin';
   onBack?: () => void;
+  onNavigate?: (view: string) => void;
 }
 
-export default function LoginForm({ userType, onBack }: LoginFormProps) {
+export default function LoginForm({ userType, onBack, onNavigate }: LoginFormProps) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -31,7 +32,15 @@ export default function LoginForm({ userType, onBack }: LoginFormProps) {
     // todo: remove mock functionality - implement actual authentication
     setTimeout(() => {
       setIsLoading(false);
-      alert(`${userType} login successful! Redirecting to dashboard...`);
+      if (onNavigate) {
+        if (userType === 'patient') {
+          onNavigate('patient-dashboard');
+        } else if (userType === 'doctor') {
+          onNavigate('doctor-dashboard');
+        } else if (userType === 'admin') {
+          onNavigate('admin-dashboard');
+        }
+      }
     }, 1500);
   };
 

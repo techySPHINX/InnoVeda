@@ -1,5 +1,9 @@
 import LandingPage from '../LandingPage'
 
 export default function LandingPageExample() {
-  return <LandingPage />
+  const mockNavigate = (view: string, userType?: 'patient' | 'doctor' | 'admin') => {
+    console.log('Mock navigation:', view, userType);
+  };
+  
+  return <LandingPage onNavigate={mockNavigate} />
 }

@@ -20,39 +20,39 @@ function Router() {
   const [currentView, setCurrentView] = useState<string>('landing');
   const [userType, setUserType] = useState<'patient' | 'doctor' | 'admin'>('patient');
 
-  // Mock navigation handler
-  // todo: remove mock functionality - replace with proper routing
+  // Navigation handler with proper flow
   const handleNavigation = (view: string, type?: 'patient' | 'doctor' | 'admin') => {
     console.log('Navigation:', view, type);
     setCurrentView(view);
     if (type) setUserType(type);
   };
 
-  // Render components based on current view
+  // Render components based on current view with proper navigation props
   const renderCurrentView = () => {
     switch (currentView) {
       case 'landing':
-        return <LandingPage />;
+        return <LandingPage onNavigate={handleNavigation} />;
       
       case 'login':
         return (
           <LoginForm 
             userType={userType} 
             onBack={() => handleNavigation('landing')}
+            onNavigate={handleNavigation}
           />
         );
       
       case 'patient-register':
-        return <PatientRegistration />;
+        return <PatientRegistration onNavigate={handleNavigation} />;
       
       case 'prakriti-assessment':
-        return <PrakritiAssessment />;
+        return <PrakritiAssessment onNavigate={handleNavigation} />;
       
       case 'patient-dashboard':
         return <PatientDashboard />;
       
       case 'doctor-dashboard':
-        return <DoctorDashboard />;
+        return <DoctorDashboard onNavigate={handleNavigation} />;
       
       case 'diet-chart-creation':
         return <DietChartCreation />;
@@ -61,7 +61,7 @@ function Router() {
         return <AdminDashboard />;
       
       default:
-        return <LandingPage />;
+        return <LandingPage onNavigate={handleNavigation} />;
     }
   };
 

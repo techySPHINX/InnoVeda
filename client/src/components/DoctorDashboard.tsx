@@ -79,7 +79,11 @@ const mockRecentActivities = [
   { id: '4', action: 'Diet modification requested for Dr. Vikram Patel', time: '1 day ago' },
 ];
 
-export default function DoctorDashboard() {
+interface DoctorDashboardProps {
+  onNavigate?: (view: string) => void;
+}
+
+export default function DoctorDashboard({ onNavigate }: DoctorDashboardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPatient, setSelectedPatient] = useState<typeof mockPatients[0] | null>(null);
 
@@ -98,6 +102,9 @@ export default function DoctorDashboard() {
   const handleCreateDietChart = (patientId: string) => {
     console.log('Creating diet chart for patient:', patientId);
     // todo: remove mock functionality - navigate to diet chart creation
+    if (onNavigate) {
+      onNavigate('diet-chart-creation');
+    }
   };
 
   const handlePatientSelect = (patient: typeof mockPatients[0]) => {
@@ -118,10 +125,15 @@ export default function DoctorDashboard() {
                 <p className="text-muted-foreground">Dr. Anjali Verma - Ayurvedic Practitioner</p>
               </div>
             </div>
-            <Button data-testid="button-new-patient">
-              <Plus className="h-4 w-4 mr-2" />
-              New Patient
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm" onClick={() => console.log('Logout clicked')}>
+                🏠 Home
+              </Button>
+              <Button data-testid="button-new-patient">
+                <Plus className="h-4 w-4 mr-2" />
+                New Patient
+              </Button>
+            </div>
           </div>
         </div>
       </div>

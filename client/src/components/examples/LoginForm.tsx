@@ -1,5 +1,9 @@
 import LoginForm from '../LoginForm'
 
 export default function LoginFormExample() {
-  return <LoginForm userType="doctor" />
+  const mockNavigate = (view: string) => {
+    console.log('Mock navigation:', view);
+  };
+  
+  return <LoginForm userType="doctor" onNavigate={mockNavigate} />
 }

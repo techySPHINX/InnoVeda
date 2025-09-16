@@ -132,10 +132,15 @@ export default function PatientDashboard() {
                 </p>
               </div>
             </div>
-            <Button data-testid="button-contact-doctor">
-              <Heart className="h-4 w-4 mr-2" />
-              Contact Doctor
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm" onClick={() => console.log('Logout clicked')}>
+                🏠 Home
+              </Button>
+              <Button data-testid="button-contact-doctor">
+                <Heart className="h-4 w-4 mr-2" />
+                Contact Vaidya
+              </Button>
+            </div>
           </div>
         </div>
       </div>

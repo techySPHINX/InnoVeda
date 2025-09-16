@@ -92,7 +92,11 @@ const questions: Question[] = [
   }
 ];
 
-export default function PrakritiAssessment() {
+interface PrakritiAssessmentProps {
+  onNavigate?: (view: string) => void;
+}
+
+export default function PrakritiAssessment({ onNavigate }: PrakritiAssessmentProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
@@ -243,7 +247,7 @@ export default function PrakritiAssessment() {
                 size="lg" 
                 className="mr-4"
                 data-testid="button-continue-dashboard"
-                onClick={() => console.log('Continue to dashboard clicked')}
+                onClick={() => onNavigate && onNavigate('patient-dashboard')}
               >
                 Continue to Dashboard
               </Button>
@@ -271,9 +275,11 @@ export default function PrakritiAssessment() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <Brain className="h-8 w-8 text-primary mr-2" />
-            <CardTitle>Prakriti Assessment</CardTitle>
+          <div className="flex items-center justify-center mb-4 relative">
+            <div className="bg-gradient-to-br from-primary to-green-600 p-3 rounded-full shadow-lg">
+              <Brain className="h-6 w-6 text-white" />
+            </div>
+            <CardTitle className="ml-3">🧬 Ayurvedic Constitution Assessment</CardTitle>
           </div>
           <CardDescription>
             Question {currentQuestion + 1} of {questions.length}: Discover your Ayurvedic constitution

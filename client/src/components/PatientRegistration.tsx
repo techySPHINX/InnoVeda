@@ -22,7 +22,11 @@ interface PatientFormData {
   chronicConditions: string[];
 }
 
-export default function PatientRegistration() {
+interface PatientRegistrationProps {
+  onNavigate?: (view: string) => void;
+}
+
+export default function PatientRegistration({ onNavigate }: PatientRegistrationProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<PatientFormData>({
     name: "",
@@ -48,6 +52,9 @@ export default function PatientRegistration() {
     } else {
       console.log('Registration completed:', formData);
       // todo: remove mock functionality - submit to backend
+      if (onNavigate) {
+        onNavigate('prakriti-assessment');
+      }
     }
   };
 
@@ -269,8 +276,10 @@ export default function PatientRegistration() {
       <Card className="w-full max-w-2xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
-            <Leaf className="h-8 w-8 text-primary mr-2" />
-            <CardTitle>Patient Registration</CardTitle>
+            <div className="bg-gradient-to-br from-primary to-green-600 p-3 rounded-full shadow-lg">
+              <Leaf className="h-6 w-6 text-white" />
+            </div>
+            <CardTitle className="ml-3">🌱 Sacred Patient Registration</CardTitle>
           </div>
           <CardDescription>
             Step {currentStep} of {totalSteps}: Complete your profile for personalized Ayurvedic care
