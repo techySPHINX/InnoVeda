@@ -1,17 +1,29 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { 
-  Building2, 
-  Users, 
-  Stethoscope, 
-  User, 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Building2,
+  Users,
+  Stethoscope,
+  User,
   Plus,
   Search,
   Settings,
@@ -19,7 +31,7 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
-  UserCog
+  UserCog,
 } from "lucide-react";
 
 // todo: remove mock data
@@ -28,78 +40,124 @@ const mockClinicStats = {
   totalPatients: 348,
   activeCharts: 256,
   complianceRate: 82,
-  monthlyGrowth: 15
+  monthlyGrowth: 15,
 };
 
 const mockDoctors = [
   {
-    id: '1',
-    name: 'Dr. Anjali Verma',
-    specialization: 'Ayurvedic Medicine',
+    id: "1",
+    name: "Dr. Anjali Verma",
+    specialization: "Ayurvedic Medicine",
     patients: 45,
-    experience: '8 years',
+    experience: "8 years",
     rating: 4.8,
-    status: 'active',
-    joinDate: '2023-01-15'
+    status: "active",
+    joinDate: "2023-01-15",
   },
   {
-    id: '2',
-    name: 'Dr. Rajesh Kumar',
-    specialization: 'Panchakarma',
+    id: "2",
+    name: "Dr. Rajesh Kumar",
+    specialization: "Panchakarma",
     patients: 38,
-    experience: '12 years', 
+    experience: "12 years",
     rating: 4.9,
-    status: 'active',
-    joinDate: '2022-08-20'
+    status: "active",
+    joinDate: "2022-08-20",
   },
   {
-    id: '3',
-    name: 'Dr. Priya Singh',
-    specialization: 'Women\'s Health',
+    id: "3",
+    name: "Dr. Priya Singh",
+    specialization: "Women's Health",
     patients: 52,
-    experience: '6 years',
+    experience: "6 years",
     rating: 4.7,
-    status: 'active',
-    joinDate: '2023-03-10'
+    status: "active",
+    joinDate: "2023-03-10",
   },
   {
-    id: '4',
-    name: 'Dr. Vikram Patel',
-    specialization: 'Digestive Health',
+    id: "4",
+    name: "Dr. Vikram Patel",
+    specialization: "Digestive Health",
     patients: 41,
-    experience: '10 years',
+    experience: "10 years",
     rating: 4.6,
-    status: 'inactive',
-    joinDate: '2022-11-05'
-  }
+    status: "inactive",
+    joinDate: "2022-11-05",
+  },
 ];
 
 const mockPatients = [
-  { id: '1', name: 'Priya Sharma', doctor: 'Dr. Anjali Verma', lastVisit: '2024-01-15', status: 'active' },
-  { id: '2', name: 'Rohit Kumar', doctor: 'Dr. Rajesh Kumar', lastVisit: '2024-01-14', status: 'active' },
-  { id: '3', name: 'Anjali Reddy', doctor: 'Dr. Priya Singh', lastVisit: '2024-01-10', status: 'needs-attention' },
-  { id: '4', name: 'Vikram Patel', doctor: 'Dr. Anjali Verma', lastVisit: '2024-01-12', status: 'active' }
+  {
+    id: "1",
+    name: "Priya Sharma",
+    doctor: "Dr. Anjali Verma",
+    lastVisit: "2024-01-15",
+    status: "active",
+  },
+  {
+    id: "2",
+    name: "Rohit Kumar",
+    doctor: "Dr. Rajesh Kumar",
+    lastVisit: "2024-01-14",
+    status: "active",
+  },
+  {
+    id: "3",
+    name: "Anjali Reddy",
+    doctor: "Dr. Priya Singh",
+    lastVisit: "2024-01-10",
+    status: "needs-attention",
+  },
+  {
+    id: "4",
+    name: "Vikram Patel",
+    doctor: "Dr. Anjali Verma",
+    lastVisit: "2024-01-12",
+    status: "active",
+  },
 ];
 
 const mockRecentActivity = [
-  { id: '1', action: 'New doctor registration: Dr. Meera Gupta', time: '2 hours ago', type: 'user' },
-  { id: '2', action: 'System maintenance completed', time: '1 day ago', type: 'system' },
-  { id: '3', action: 'Monthly compliance report generated', time: '2 days ago', type: 'report' },
-  { id: '4', action: 'New patient batch imported: 25 patients', time: '3 days ago', type: 'data' }
+  {
+    id: "1",
+    action: "New doctor registration: Dr. Meera Gupta",
+    time: "2 hours ago",
+    type: "user",
+  },
+  {
+    id: "2",
+    action: "System maintenance completed",
+    time: "1 day ago",
+    type: "system",
+  },
+  {
+    id: "3",
+    action: "Monthly compliance report generated",
+    time: "2 days ago",
+    type: "report",
+  },
+  {
+    id: "4",
+    action: "New patient batch imported: 25 patients",
+    time: "3 days ago",
+    type: "data",
+  },
 ];
 
 export default function AdminDashboard() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTab, setSelectedTab] = useState('overview');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTab, setSelectedTab] = useState("overview");
 
-  const filteredDoctors = mockDoctors.filter(doctor =>
-    doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    doctor.specialization.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredDoctors = mockDoctors.filter(
+    (doctor) =>
+      doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.specialization.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredPatients = mockPatients.filter(patient =>
-    patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    patient.doctor.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPatients = mockPatients.filter(
+    (patient) =>
+      patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.doctor.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleAddUser = (type: string) => {
@@ -122,11 +180,17 @@ export default function AdminDashboard() {
               <Building2 className="h-8 w-8 text-primary" />
               <div>
                 <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-                <p className="text-muted-foreground">Triveda Clinic Management System</p>
+                <p className="text-muted-foreground">
+                  TrivedaCare Clinic Management System
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm" onClick={() => console.log('Logout clicked')}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => console.log("Logout clicked")}
+              >
                 🏠 Home
               </Button>
               <Button variant="outline">
@@ -149,54 +213,68 @@ export default function AdminDashboard() {
             <CardContent className="flex items-center p-6">
               <Stethoscope className="h-8 w-8 text-primary mr-4" />
               <div>
-                <p className="text-2xl font-bold">{mockClinicStats.totalDoctors}</p>
+                <p className="text-2xl font-bold">
+                  {mockClinicStats.totalDoctors}
+                </p>
                 <p className="text-sm text-muted-foreground">Total Doctors</p>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="flex items-center p-6">
               <Users className="h-8 w-8 text-blue-500 mr-4" />
               <div>
-                <p className="text-2xl font-bold">{mockClinicStats.totalPatients}</p>
+                <p className="text-2xl font-bold">
+                  {mockClinicStats.totalPatients}
+                </p>
                 <p className="text-sm text-muted-foreground">Total Patients</p>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="flex items-center p-6">
               <CheckCircle className="h-8 w-8 text-green-500 mr-4" />
               <div>
-                <p className="text-2xl font-bold">{mockClinicStats.activeCharts}</p>
+                <p className="text-2xl font-bold">
+                  {mockClinicStats.activeCharts}
+                </p>
                 <p className="text-sm text-muted-foreground">Active Charts</p>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="flex items-center p-6">
               <BarChart3 className="h-8 w-8 text-orange-500 mr-4" />
               <div>
-                <p className="text-2xl font-bold">{mockClinicStats.complianceRate}%</p>
+                <p className="text-2xl font-bold">
+                  {mockClinicStats.complianceRate}%
+                </p>
                 <p className="text-sm text-muted-foreground">Compliance Rate</p>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="flex items-center p-6">
               <TrendingUp className="h-8 w-8 text-purple-500 mr-4" />
               <div>
-                <p className="text-2xl font-bold">+{mockClinicStats.monthlyGrowth}%</p>
+                <p className="text-2xl font-bold">
+                  +{mockClinicStats.monthlyGrowth}%
+                </p>
                 <p className="text-sm text-muted-foreground">Monthly Growth</p>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+        <Tabs
+          value={selectedTab}
+          onValueChange={setSelectedTab}
+          className="space-y-6"
+        >
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="doctors">Doctors</TabsTrigger>
@@ -210,20 +288,33 @@ export default function AdminDashboard() {
               <Card className="lg:col-span-2">
                 <CardHeader>
                   <CardTitle>Recent System Activity</CardTitle>
-                  <CardDescription>Latest updates and changes in the system</CardDescription>
+                  <CardDescription>
+                    Latest updates and changes in the system
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {mockRecentActivity.map((activity) => (
-                      <div key={activity.id} className="flex items-start space-x-3">
-                        <div className={`w-2 h-2 rounded-full mt-2 ${
-                          activity.type === 'user' ? 'bg-blue-500' :
-                          activity.type === 'system' ? 'bg-green-500' :
-                          activity.type === 'report' ? 'bg-orange-500' : 'bg-purple-500'
-                        }`}></div>
+                      <div
+                        key={activity.id}
+                        className="flex items-start space-x-3"
+                      >
+                        <div
+                          className={`w-2 h-2 rounded-full mt-2 ${
+                            activity.type === "user"
+                              ? "bg-blue-500"
+                              : activity.type === "system"
+                              ? "bg-green-500"
+                              : activity.type === "report"
+                              ? "bg-orange-500"
+                              : "bg-purple-500"
+                          }`}
+                        ></div>
                         <div>
                           <p className="text-sm">{activity.action}</p>
-                          <p className="text-xs text-muted-foreground">{activity.time}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {activity.time}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -237,35 +328,29 @@ export default function AdminDashboard() {
                   <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button 
+                  <Button
                     className="w-full justify-start"
                     variant="outline"
-                    onClick={() => handleAddUser('doctor')}
+                    onClick={() => handleAddUser("doctor")}
                     data-testid="button-add-doctor"
                   >
                     <Stethoscope className="h-4 w-4 mr-2" />
                     Add New Doctor
                   </Button>
-                  <Button 
+                  <Button
                     className="w-full justify-start"
                     variant="outline"
-                    onClick={() => handleAddUser('patient')}
+                    onClick={() => handleAddUser("patient")}
                     data-testid="button-add-patient"
                   >
                     <User className="h-4 w-4 mr-2" />
                     Register Patient
                   </Button>
-                  <Button 
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
+                  <Button className="w-full justify-start" variant="outline">
                     <BarChart3 className="h-4 w-4 mr-2" />
                     Generate Report
                   </Button>
-                  <Button 
-                    className="w-full justify-start"
-                    variant="outline"
-                  >
+                  <Button className="w-full justify-start" variant="outline">
                     <Settings className="h-4 w-4 mr-2" />
                     System Settings
                   </Button>
@@ -277,26 +362,40 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Top Performing Doctors</CardTitle>
-                <CardDescription>Based on patient count and ratings</CardDescription>
+                <CardDescription>
+                  Based on patient count and ratings
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {mockDoctors.slice(0, 4).map((doctor) => (
-                    <div key={doctor.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div
+                      key={doctor.id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
                       <div className="flex items-center space-x-3">
                         <Avatar>
                           <AvatarFallback>
-                            {doctor.name.split(' ').map(n => n[0]).join('')}
+                            {doctor.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
                           </AvatarFallback>
                         </Avatar>
                         <div>
                           <p className="font-medium">{doctor.name}</p>
-                          <p className="text-sm text-muted-foreground">{doctor.specialization}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {doctor.specialization}
+                          </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium">{doctor.patients} patients</p>
-                        <p className="text-sm text-muted-foreground">⭐ {doctor.rating}</p>
+                        <p className="text-sm font-medium">
+                          {doctor.patients} patients
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          ⭐ {doctor.rating}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -332,7 +431,7 @@ export default function AdminDashboard() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <Button onClick={() => handleAddUser('doctor')}>
+                  <Button onClick={() => handleAddUser("doctor")}>
                     <Plus className="h-4 w-4 mr-2" />
                     Add Doctor
                   </Button>
@@ -344,37 +443,57 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Doctor Management</CardTitle>
-                <CardDescription>Manage doctor profiles and access permissions</CardDescription>
+                <CardDescription>
+                  Manage doctor profiles and access permissions
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {filteredDoctors.map((doctor) => (
-                    <div key={doctor.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div
+                      key={doctor.id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
                       <div className="flex items-center space-x-4">
                         <Avatar>
                           <AvatarFallback>
-                            {doctor.name.split(' ').map(n => n[0]).join('')}
+                            {doctor.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
                           </AvatarFallback>
                         </Avatar>
                         <div>
                           <h3 className="font-semibold">{doctor.name}</h3>
-                          <p className="text-sm text-muted-foreground">{doctor.specialization}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {doctor.specialization}
+                          </p>
                           <div className="flex items-center space-x-4 mt-1">
-                            <span className="text-xs text-muted-foreground">{doctor.experience}</span>
-                            <span className="text-xs text-muted-foreground">⭐ {doctor.rating}</span>
-                            <span className="text-xs text-muted-foreground">{doctor.patients} patients</span>
+                            <span className="text-xs text-muted-foreground">
+                              {doctor.experience}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              ⭐ {doctor.rating}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {doctor.patients} patients
+                            </span>
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center space-x-3">
-                        <Badge variant={doctor.status === 'active' ? 'default' : 'secondary'}>
+                        <Badge
+                          variant={
+                            doctor.status === "active" ? "default" : "secondary"
+                          }
+                        >
                           {doctor.status}
                         </Badge>
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="outline"
-                          onClick={() => handleUserAction('edit', doctor.id)}
+                          onClick={() => handleUserAction("edit", doctor.id)}
                           data-testid={`button-edit-doctor-${doctor.id}`}
                         >
                           <UserCog className="h-4 w-4" />
@@ -402,7 +521,7 @@ export default function AdminDashboard() {
                       data-testid="input-search-patients"
                     />
                   </div>
-                  <Button onClick={() => handleAddUser('patient')}>
+                  <Button onClick={() => handleAddUser("patient")}>
                     <Plus className="h-4 w-4 mr-2" />
                     Register Patient
                   </Button>
@@ -414,30 +533,53 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Patient Management</CardTitle>
-                <CardDescription>View and manage patient records</CardDescription>
+                <CardDescription>
+                  View and manage patient records
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {filteredPatients.map((patient) => (
-                    <div key={patient.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div
+                      key={patient.id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
                       <div className="flex items-center space-x-4">
                         <Avatar>
                           <AvatarFallback>
-                            {patient.name.split(' ').map(n => n[0]).join('')}
+                            {patient.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
                           </AvatarFallback>
                         </Avatar>
                         <div>
                           <h3 className="font-semibold">{patient.name}</h3>
-                          <p className="text-sm text-muted-foreground">Assigned to: {patient.doctor}</p>
-                          <p className="text-sm text-muted-foreground">Last visit: {new Date(patient.lastVisit).toLocaleDateString()}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Assigned to: {patient.doctor}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Last visit:{" "}
+                            {new Date(patient.lastVisit).toLocaleDateString()}
+                          </p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center space-x-3">
-                        <Badge variant={patient.status === 'active' ? 'default' : 'destructive'}>
-                          {patient.status === 'active' ? 'Active' : 'Needs Attention'}
+                        <Badge
+                          variant={
+                            patient.status === "active"
+                              ? "default"
+                              : "destructive"
+                          }
+                        >
+                          {patient.status === "active"
+                            ? "Active"
+                            : "Needs Attention"}
                         </Badge>
-                        <Button size="sm" variant="outline">View</Button>
+                        <Button size="sm" variant="outline">
+                          View
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -487,15 +629,23 @@ export default function AdminDashboard() {
                   <div className="space-y-4">
                     <div className="text-center p-4 border rounded-lg">
                       <p className="text-2xl font-bold text-green-500">98.5%</p>
-                      <p className="text-sm text-muted-foreground">System Uptime</p>
+                      <p className="text-sm text-muted-foreground">
+                        System Uptime
+                      </p>
                     </div>
                     <div className="text-center p-4 border rounded-lg">
                       <p className="text-2xl font-bold text-blue-500">1.2s</p>
-                      <p className="text-sm text-muted-foreground">Avg Response Time</p>
+                      <p className="text-sm text-muted-foreground">
+                        Avg Response Time
+                      </p>
                     </div>
                     <div className="text-center p-4 border rounded-lg">
-                      <p className="text-2xl font-bold text-orange-500">99.9%</p>
-                      <p className="text-sm text-muted-foreground">Data Integrity</p>
+                      <p className="text-2xl font-bold text-orange-500">
+                        99.9%
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Data Integrity
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -504,14 +654,21 @@ export default function AdminDashboard() {
               <Card className="md:col-span-2">
                 <CardHeader>
                   <CardTitle>Monthly Growth Trends</CardTitle>
-                  <CardDescription>Patient registrations and doctor onboarding</CardDescription>
+                  <CardDescription>
+                    Patient registrations and doctor onboarding
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-4 gap-4">
-                    {['Oct', 'Nov', 'Dec', 'Jan'].map((month, index) => (
-                      <div key={month} className="text-center p-4 border rounded-lg">
+                    {["Oct", "Nov", "Dec", "Jan"].map((month, index) => (
+                      <div
+                        key={month}
+                        className="text-center p-4 border rounded-lg"
+                      >
                         <p className="text-lg font-bold">{45 + index * 12}</p>
-                        <p className="text-sm text-muted-foreground">{month} - New Patients</p>
+                        <p className="text-sm text-muted-foreground">
+                          {month} - New Patients
+                        </p>
                       </div>
                     ))}
                   </div>

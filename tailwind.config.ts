@@ -11,6 +11,49 @@ export default {
         sm: ".1875rem", /* 3px */
       },
       colors: {
+        // Ayurvedic health-focused colors
+        ayurveda: {
+          sage: {
+            light: "hsl(142, 69%, 58%)", // Light sage green - Ayurvedic healing
+            DEFAULT: "hsl(142, 55%, 45%)", // Medium sage
+            dark: "hsl(142, 45%, 35%)", // Deeper sage for dark mode
+          },
+          earth: {
+            light: "hsl(35, 25%, 95%)", // Warm neutral backgrounds
+            DEFAULT: "hsl(35, 20%, 85%)",
+            dark: "hsl(35, 15%, 75%)",
+          },
+          success: "hsl(120, 60%, 50%)", // Natural green for positive actions
+          warning: "hsl(45, 85%, 55%)", // Warm amber for attention
+          error: "hsl(0, 65%, 55%)", // Muted red for alerts
+          kapha: "hsl(200, 60%, 60%)", // Cool blue for Kapha dosha
+          pitta: "hsl(15, 80%, 60%)", // Warm red-orange for Pitta dosha
+          vata: "hsl(270, 50%, 70%)", // Purple for Vata dosha
+        },
+        pink: {
+          '50': '#fdf2f8',
+          '100': '#fce7f3',
+          '200': '#fbcfe8',
+          '300': '#f9a8d4',
+          '400': '#f472b6',
+          '500': '#ec4899',
+          '600': '#db2777',
+          '700': '#be185d',
+          '800': '#9d174d',
+          '900': '#831843',
+        },
+        rose: {
+          '50': '#fff1f2',
+          '100': '#ffe4e6',
+          '200': '#fecdd3',
+          '300': '#fda4af',
+          '400': '#fb7185',
+          '500': '#f43f5e',
+          '600': '#e11d48',
+          '700': '#be123c',
+          '800': '#9f1239',
+          '900': '#881337',
+        },
         // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
