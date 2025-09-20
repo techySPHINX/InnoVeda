@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { FileText, Calendar, Eye, XCircle } from "lucide-react";
+import {
+  FileText,
+  Calendar,
+  Eye,
+  XCircle,
+  UserPlus,
+  UserMinus,
+  Users,
+} from "lucide-react";
 
 // Mock health records data
 const mockHealthRecords = [
@@ -45,10 +53,67 @@ const mockHealthRecords = [
   },
 ];
 
+// Mock users (doctors/admins)
+const mockUsers = [
+  { id: "d1", name: "Dr. A. Sharma", role: "Doctor" },
+  { id: "d2", name: "Dr. B. Singh", role: "Doctor" },
+  { id: "a1", name: "Admin R. Patel", role: "Admin" },
+];
+
+// Initial access and view logs (simulate backend)
+const initialAccess = {
+  1: ["d1"], // recordId: [userIds with access]
+  2: ["d2", "a1"],
+  3: [],
+  4: ["a1"],
+};
+const initialViewLogs = {
+  1: [{ userId: "d1", date: "2025-09-18" }],
+  2: [
+    { userId: "d2", date: "2025-09-19" },
+    { userId: "a1", date: "2025-09-20" },
+  ],
+  3: [],
+  4: [{ userId: "a1", date: "2025-09-17" }],
+};
+
 export default function PatientHealthRecords() {
   const [selectedRecord, setSelectedRecord] = useState(
     null as null | (typeof mockHealthRecords)[0]
   );
+  // Simulate backend state for access and view logs
+  const [access, setAccess] = useState<{ [recordId: number]: string[] }>(
+    initialAccess
+  );
+  const [viewLogs, setViewLogs] = useState<{
+    [recordId: number]: { userId: string; date: string }[];
+  }>(initialViewLogs);
+
+  // Grant access to a user for a record
+  const grantAccess = (recordId: number, userId: string) => {
+    setAccess((prev) => ({
+      ...prev,
+      [recordId]: [...(prev[recordId] || []), userId],
+    }));
+  };
+  // Revoke access
+  const revokeAccess = (recordId: number, userId: string) => {
+    setAccess((prev) => ({
+      ...prev,
+      [recordId]: (prev[recordId] || []).filter((id) => id !== userId),
+    }));
+  };
+
+  // Simulate a user viewing a record (for demo, not triggered in UI)
+  const logView = (recordId: number, userId: string) => {
+    setViewLogs((prev) => ({
+      ...prev,
+      [recordId]: [
+        ...(prev[recordId] || []),
+        { userId, date: new Date().toISOString().slice(0, 10) },
+      ],
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50 py-10 px-2">
@@ -57,30 +122,89 @@ export default function PatientHealthRecords() {
           <FileText className="w-7 h-7 text-emerald-500" /> Health Records
         </h1>
         <div className="space-y-6">
-          {mockHealthRecords.map((rec, idx) => (
-            <div
-              key={rec.id}
-              className={`relative bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-100 rounded-xl p-6 shadow flex flex-col md:flex-row items-center gap-4 transition-transform duration-200 hover:scale-[1.02] hover:shadow-xl animate-fade-in-up`}
-              style={{ animationDelay: `${idx * 80}ms` }}
-            >
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-5 h-5 text-blue-400" />
-                  <span className="text-gray-500 text-sm">{rec.date}</span>
-                </div>
-                <div className="font-semibold text-lg text-gray-900 mb-1">
-                  {rec.title}
-                </div>
-                <div className="text-gray-700 text-sm mb-2">{rec.summary}</div>
-              </div>
-              <button
-                className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold shadow transition-colors"
-                onClick={() => setSelectedRecord(rec)}
+          {mockHealthRecords.map((rec, idx) => {
+            const allowedUsers = access[rec.id] || [];
+            const viewers = (viewLogs[rec.id] || [])
+              .map((log) => {
+                const user = mockUsers.find((u) => u.id === log.userId);
+                return user ? { ...user, date: log.date } : null;
+              })
+              .filter(Boolean) as Array<{
+              id: string;
+              name: string;
+              role: string;
+              date: string;
+            }>;
+            return (
+              <div
+                key={rec.id}
+                className={`relative bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-100 rounded-xl p-6 shadow flex flex-col md:flex-row items-center gap-4 transition-transform duration-200 hover:scale-[1.02] hover:shadow-xl animate-fade-in-up`}
+                style={{ animationDelay: `${idx * 80}ms` }}
               >
-                <Eye className="w-5 h-5" /> View Details
-              </button>
-            </div>
-          ))}
+                <div className="flex-1 w-full">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="w-5 h-5 text-blue-400" />
+                    <span className="text-gray-500 text-sm">{rec.date}</span>
+                  </div>
+                  <div className="font-semibold text-lg text-gray-900 mb-1">
+                    {rec.title}
+                  </div>
+                  <div className="text-gray-700 text-sm mb-2">
+                    {rec.summary}
+                  </div>
+                  {/* Viewers */}
+                  <div className="flex items-center gap-2 mt-2">
+                    <Users className="w-4 h-4 text-emerald-400" />
+                    <span className="text-xs text-gray-500">Viewed by:</span>
+                    {viewers.length === 0 ? (
+                      <span className="text-xs text-gray-400 ml-1">
+                        No one yet
+                      </span>
+                    ) : (
+                      viewers.map((v) => (
+                        <span
+                          key={v.id}
+                          className="text-xs bg-emerald-100 text-emerald-700 rounded px-2 py-0.5 ml-1"
+                        >
+                          {v.name}{" "}
+                          <span className="text-gray-400">({v.role})</span>{" "}
+                          <span className="text-gray-400">on {v.date}</span>
+                        </span>
+                      ))
+                    )}
+                  </div>
+                  {/* Access controls */}
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {mockUsers.map((user) =>
+                      allowedUsers.includes(user.id) ? (
+                        <button
+                          key={user.id}
+                          className="flex items-center gap-1 bg-red-100 text-red-700 px-2 py-1 rounded text-xs hover:bg-red-200 border border-red-200"
+                          onClick={() => revokeAccess(rec.id, user.id)}
+                        >
+                          <UserMinus className="w-3 h-3" /> Revoke {user.name}
+                        </button>
+                      ) : (
+                        <button
+                          key={user.id}
+                          className="flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs hover:bg-emerald-200 border border-emerald-200"
+                          onClick={() => grantAccess(rec.id, user.id)}
+                        >
+                          <UserPlus className="w-3 h-3" /> Grant {user.name}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </div>
+                <button
+                  className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold shadow transition-colors"
+                  onClick={() => setSelectedRecord(rec)}
+                >
+                  <Eye className="w-5 h-5" /> View Details
+                </button>
+              </div>
+            );
+          })}
         </div>
 
         {/* Modal for record details */}
@@ -110,6 +234,58 @@ export default function PatientHealthRecords() {
                 className="text-gray-700 text-base mb-4"
                 dangerouslySetInnerHTML={{ __html: selectedRecord.details }}
               />
+              {/* Viewers in modal */}
+              <div className="mb-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <Users className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs text-gray-500">Viewed by:</span>
+                </div>
+                {(viewLogs[selectedRecord.id] || []).length === 0 ? (
+                  <span className="text-xs text-gray-400 ml-6">No one yet</span>
+                ) : (
+                  (viewLogs[selectedRecord.id] || []).map((log, i) => {
+                    const user = mockUsers.find((u) => u.id === log.userId);
+                    return user ? (
+                      <div
+                        key={user.id + log.date}
+                        className="ml-6 text-xs bg-emerald-100 text-emerald-700 rounded px-2 py-0.5 my-0.5 inline-block"
+                      >
+                        {user.name}{" "}
+                        <span className="text-gray-400">({user.role})</span>{" "}
+                        <span className="text-gray-400">on {log.date}</span>
+                      </div>
+                    ) : null;
+                  })
+                )}
+              </div>
+              {/* Access controls in modal */}
+              <div className="mb-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <Users className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs text-gray-500">Access control:</span>
+                </div>
+                <div className="flex flex-wrap gap-2 ml-6 mt-1">
+                  {mockUsers.map((user) =>
+                    (access[selectedRecord.id] || []).includes(user.id) ? (
+                      <button
+                        key={user.id}
+                        className="flex items-center gap-1 bg-red-100 text-red-700 px-2 py-1 rounded text-xs hover:bg-red-200 border border-red-200"
+                        onClick={() => revokeAccess(selectedRecord.id, user.id)}
+                      >
+                        <UserMinus className="w-3 h-3" /> Revoke {user.name}
+                      </button>
+                    ) : (
+                      <button
+                        key={user.id}
+                        className="flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs hover:bg-emerald-200 border border-emerald-200"
+                        onClick={() => grantAccess(selectedRecord.id, user.id)}
+                      >
+                        <UserPlus className="w-3 h-3" /> Grant {user.name}
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
               <button
                 className="mt-4 bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2 rounded-lg font-semibold shadow w-full transition-colors"
                 onClick={() => setSelectedRecord(null)}

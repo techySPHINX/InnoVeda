@@ -6,3 +6,6 @@ vite.config.ts.*
 *.tar.gz
 package-lock.json
 pnpm-lock.yaml
+.env
+
+.vercel

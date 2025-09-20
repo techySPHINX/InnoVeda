@@ -30,6 +30,7 @@ interface LoginFormProps {
 
 export default function LoginForm({ userType = "patient" }: LoginFormProps) {
   const [formData, setFormData] = useState({
+    abhaId: "",
     email: "",
     password: "",
     rememberMe: false,
@@ -216,100 +217,153 @@ export default function LoginForm({ userType = "patient" }: LoginFormProps) {
                 </p>
               </div>
               <div className="space-y-1 text-sm">
-                <p className={`text-${roleDetails.accent}-700`}>
-                  <span className="font-medium">Email:</span>{" "}
-                  {roleDetails.demoCredentials.email}
-                </p>
-                <p className={`text-${roleDetails.accent}-700`}>
-                  <span className="font-medium">Password:</span>{" "}
-                  {roleDetails.demoCredentials.password}
-                </p>
+                {userType === "patient" ? (
+                  <>
+                    <p className={`text-${roleDetails.accent}-700 font-medium`}>
+                      Demo ABHA IDs:
+                    </p>
+                    <ul
+                      className={`text-${roleDetails.accent}-700 ml-4 list-disc`}
+                    >
+                      <li>1234-5678-9012</li>
+                      <li>2345-6789-0123</li>
+                      <li>3456-7890-1234</li>
+                      <li>4567-8901-2345</li>
+                      <li>5678-9012-3456</li>
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <p className={`text-${roleDetails.accent}-700`}>
+                      <span className="font-medium">Email:</span>{" "}
+                      {roleDetails.demoCredentials.email}
+                    </p>
+                    <p className={`text-${roleDetails.accent}-700`}>
+                      <span className="font-medium">Password:</span>{" "}
+                      {roleDetails.demoCredentials.password}
+                    </p>
+                  </>
+                )}
               </div>
             </div>
 
             {/* Form Fields */}
             <div className="space-y-4">
-              <div>
-                <Label
-                  htmlFor={`email-${userType}`}
-                  className="text-gray-700 font-bold text-base"
-                >
-                  Email Address
-                </Label>
-                <Input
-                  id={`email-${userType}`}
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="Enter your email"
-                  className="mt-1 border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg h-12"
-                  data-testid="input-email"
-                  required
-                />
-              </div>
-
-              <div>
-                <Label
-                  htmlFor={`password-${userType}`}
-                  className="text-gray-700 font-bold text-base"
-                >
-                  Password
-                </Label>
-                <div className="relative mt-1">
+              {userType === "patient" ? (
+                <div>
+                  <Label
+                    htmlFor="abha-id"
+                    className="text-gray-700 font-bold text-base"
+                  >
+                    ABHA ID
+                  </Label>
                   <Input
-                    id={`password-${userType}`}
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
+                    id="abha-id"
+                    type="text"
+                    value={formData.abhaId}
                     onChange={(e) =>
-                      handleInputChange("password", e.target.value)
+                      handleInputChange("abhaId", e.target.value)
                     }
-                    placeholder="Enter your password"
-                    className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg h-12 pr-12"
-                    data-testid="input-password"
+                    placeholder="Enter your ABHA ID"
+                    className="mt-1 border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg h-12"
+                    data-testid="input-abha-id"
                     required
                   />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
                 </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="remember"
-                    checked={formData.rememberMe}
-                    onCheckedChange={(checked) =>
-                      handleInputChange("rememberMe", checked as boolean)
-                    }
-                    data-testid="checkbox-remember"
-                    className="border-gray-300"
-                  />
-                  <Label
-                    htmlFor="remember"
-                    className="text-sm text-gray-700 font-bold"
-                  >
-                    Remember me
-                  </Label>
-                </div>
-                <Button
-                  variant="ghost"
-                  className="text-sm text-emerald-600 hover:text-emerald-700 p-0 h-auto"
-                >
-                  Forgot password?
-                </Button>
-              </div>
+              ) : (
+                <>
+                  <div>
+                    <Label
+                      htmlFor={`email-${userType}`}
+                      className="text-gray-700 font-bold text-base"
+                    >
+                      Email Address
+                    </Label>
+                    <Input
+                      id={`email-${userType}`}
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
+                      placeholder="Enter your email"
+                      className="mt-1 border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg h-12"
+                      data-testid="input-email"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label
+                      htmlFor={`password-${userType}`}
+                      className="text-gray-700 font-bold text-base"
+                    >
+                      Password
+                    </Label>
+                    <div className="relative mt-1">
+                      <Input
+                        id={`password-${userType}`}
+                        type={showPassword ? "text" : "password"}
+                        value={formData.password}
+                        onChange={(e) =>
+                          handleInputChange("password", e.target.value)
+                        }
+                        placeholder="Enter your password"
+                        className="border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-lg h-12 pr-12"
+                        data-testid="input-password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff size={18} />
+                        ) : (
+                          <Eye size={18} />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="remember"
+                        checked={formData.rememberMe}
+                        onCheckedChange={(checked) =>
+                          handleInputChange("rememberMe", checked as boolean)
+                        }
+                        data-testid="checkbox-remember"
+                        className="border-gray-300"
+                      />
+                      <Label
+                        htmlFor="remember"
+                        className="text-sm text-gray-700 font-bold"
+                      >
+                        Remember me
+                      </Label>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      className="text-sm text-emerald-600 hover:text-emerald-700 p-0 h-auto"
+                    >
+                      Forgot password?
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Action Buttons */}
             <div className="space-y-3">
               <Button
                 onClick={handleLogin}
-                disabled={isLoading || !formData.email || !formData.password}
+                disabled={
+                  isLoading ||
+                  (userType === "patient"
+                    ? !formData.abhaId
+                    : !formData.email || !formData.password)
+                }
                 className={`w-full h-12 bg-gradient-to-r ${roleDetails.gradient} hover:opacity-90 transition-all duration-300 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]`}
                 data-testid="button-login"
               >
@@ -318,6 +372,8 @@ export default function LoginForm({ userType = "patient" }: LoginFormProps) {
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
                     Signing in...
                   </div>
+                ) : userType === "patient" ? (
+                  "Sign in with ABHA ID"
                 ) : (
                   `Sign in as ${
                     userType.charAt(0).toUpperCase() + userType.slice(1)

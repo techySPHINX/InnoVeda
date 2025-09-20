@@ -158,6 +158,8 @@ const DoctorCard = ({
   </div>
 );
 import React, { useState } from "react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import {
   BarChart,
   Bar,
@@ -760,7 +762,32 @@ export default function AdvancedAyurvedicDietCharts() {
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </button>
-              <button className="flex items-center px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <button
+                className="flex items-center px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                onClick={() => {
+                  // Prepare data for export
+                  const data = mealLogs.map((meal) => ({
+                    Date: meal.date,
+                    Meal: meal.meal,
+                    Status: meal.status,
+                    Foods: meal.foods.join(", "),
+                    Time: meal.time,
+                    DoshaEffect: meal.doshaEffect,
+                    Rationale: meal.rationale,
+                  }));
+                  const ws = XLSX.utils.json_to_sheet(data);
+                  const wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, ws, "DietCharts");
+                  const wbout = XLSX.write(wb, {
+                    bookType: "xlsx",
+                    type: "array",
+                  });
+                  saveAs(
+                    new Blob([wbout], { type: "application/octet-stream" }),
+                    "diet_charts.xlsx"
+                  );
+                }}
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </button>

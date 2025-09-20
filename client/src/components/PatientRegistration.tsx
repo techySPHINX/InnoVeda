@@ -41,6 +41,7 @@ import {
 import { useRef } from "react";
 
 interface PatientFormData {
+  abhaId: string;
   name: string;
   age: string;
   gender: string;
@@ -63,6 +64,7 @@ export default function PatientRegistration({
   const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<PatientFormData>({
+    abhaId: "",
     name: "",
     age: "",
     gender: "",
@@ -133,6 +135,20 @@ export default function PatientRegistration({
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <User className="w-5 h-5 text-primary" /> Personal Information
             </h3>
+            <div className="mb-4">
+              <Label htmlFor="abha-id" className="flex items-center gap-1 mb-1">
+                <ShieldCheck className="w-4 h-4 text-muted-foreground" /> ABHA
+                ID *
+              </Label>
+              <Input
+                id="abha-id"
+                data-testid="input-abha-id"
+                value={formData.abhaId}
+                onChange={(e) => handleInputChange("abhaId", e.target.value)}
+                placeholder="Enter your ABHA ID"
+                required
+              />
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="name" className="flex items-center gap-1 mb-1">
