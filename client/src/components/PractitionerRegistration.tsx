@@ -164,7 +164,7 @@ export default function PractitionerRegistration({
               <p className="text-lg text-gray-700 font-medium mb-2">
                 Thank you for joining{" "}
                 <span className="text-indigo-600 font-bold">TrivedaCare</span>{" "}
-                as an Ayurvedic Doctor.
+                as an Ayurvedic Practitioner.
               </p>
               <p className="text-base text-gray-500 mb-4 max-w-md">
                 Your details will be verified by our team. We are excited to
@@ -242,7 +242,7 @@ export default function PractitionerRegistration({
                   <Stethoscope className="h-8 w-8 text-white" />
                 </div>
                 <h2 className="text-xl font-semibold mb-1">
-                  Doctor Registration
+                  Practitioner Registration
                 </h2>
                 <p className="text-sm text-white/90 font-medium">
                   Join TrivedaCare as a certified Ayurvedic professional

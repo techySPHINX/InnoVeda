@@ -1,20 +1,23 @@
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from './i18n/en.json';
-import hi from './i18n/hi.json';
-
-const resources = {
-  en: { translation: en },
-  hi: { translation: hi },
-};
+import HttpBackend from 'i18next-http-backend';
 
 i18n
+  .use(HttpBackend)
   .use(initReactI18next)
   .init({
-    resources,
     lng: 'en',
     fallbackLng: 'en',
+    ns: [
+      'translation',
+      'components/SuggestSeasonalGuidelines',
+    ],
+    defaultNS: 'translation',
     interpolation: { escapeValue: false },
+    backend: {
+      loadPath: '/src/i18n/{{ns}}.{{lng}}.json',
+    },
   });
 
 export default i18n;

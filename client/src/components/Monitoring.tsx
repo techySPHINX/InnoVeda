@@ -198,14 +198,14 @@ export default function HealthcareMonitoring() {
           patient.recommendations
         }%. Risk Level: ${patient.riskLevel?.toUpperCase()}`;
       }
-      // Doctor recommendation (could be dynamic based on risk)
+      // Practitioner recommendation (could be dynamic based on risk)
       let docRec = "";
       if (patient.riskLevel === "high") {
-        docRec = `Recommended Doctor: Dr. Aarav Mehta (Endocrinologist)\nContact: +91-9876543210\nSpecialty: Critical care for metabolic disorders.`;
+        docRec = `Recommended Practitioner: Dr. Aarav Mehta (Endocrinologist)\nContact: +91-9876543210\nSpecialty: Critical care for metabolic disorders.`;
       } else if (patient.riskLevel === "medium") {
-        docRec = `Recommended Doctor: Dr. Kavya Singh (General Physician)\nContact: +91-9123456780\nSpecialty: Preventive medicine and lifestyle management.`;
+        docRec = `Recommended Practitioner: Dr. Kavya Singh (General Physician)\nContact: +91-9123456780\nSpecialty: Preventive medicine and lifestyle management.`;
       } else {
-        docRec = `Recommended Doctor: Dr. Rohan Patel (Family Physician)\nContact: +91-9988776655\nSpecialty: Routine monitoring and wellness.`;
+        docRec = `Recommended Practitioner: Dr. Rohan Patel (Family Physician)\nContact: +91-9988776655\nSpecialty: Routine monitoring and wellness.`;
       }
       setAiResponse((prev) => ({ ...prev, [patient.id]: resp }));
       setDoctorRecommendation((prev) => ({ ...prev, [patient.id]: docRec }));
@@ -697,11 +697,11 @@ export default function HealthcareMonitoring() {
                     <p className="text-sm text-indigo-700">
                       {aiResponse[patient.id]}
                     </p>
-                    {/* Doctor Recommendation UI */}
+                    {/* Practitioner Recommendation UI */}
                     <div className="mt-2 p-2 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
                       <div className="text-xs font-semibold text-green-800 mb-1 flex items-center">
                         <User className="h-4 w-4 mr-1" />
-                        Doctor Recommendation
+                        Practitioner Recommendation
                       </div>
                       <div className="text-sm text-green-700 whitespace-pre-line">
                         {doctorRecommendation[patient.id]}
@@ -740,7 +740,7 @@ export default function HealthcareMonitoring() {
                       <div className="mb-4">
                         <div className="text-xs font-semibold text-green-800 mb-1 flex items-center">
                           <User className="h-4 w-4 mr-1" />
-                          Doctor Recommendation
+                          Practitioner Recommendation
                         </div>
                         <div className="text-sm text-green-700 whitespace-pre-line">
                           {doctorRecommendation[modalPatientId]}

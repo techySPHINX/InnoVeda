@@ -21,7 +21,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
   onLogin,
   onRegister,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["components/ui/LoginCard"]);
   if (role === "patient") {
     return (
       <Card className="hover-elevate bg-gradient-to-br from-white to-green-50/30 border-primary/30 shadow-xl relative overflow-hidden">
@@ -33,10 +33,10 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             <User className="h-12 w-12 text-white" />
           </div>
           <CardTitle className="text-primary text-xl">
-            🧘‍♀️ {t("patient_portal")}
+            🧘‍♀️ {t("patient_portal", { ns: "components/ui/LoginCard" })}
           </CardTitle>
           <CardDescription className="text-base">
-            {t("patient_portal_desc")}
+            {t("patient_portal_desc", { ns: "components/ui/LoginCard" })}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -46,7 +46,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             data-testid="button-patient-login"
             onClick={onLogin}
           >
-            {t("login_as_patient")}
+            {t("login_as_patient", { ns: "components/ui/LoginCard" })}
           </Button>
           <Button
             variant="outline"
@@ -54,7 +54,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             data-testid="button-patient-register"
             onClick={onRegister}
           >
-            {t("register_new_patient")}
+            {t("register_new_patient", { ns: "components/ui/LoginCard" })}
           </Button>
         </CardContent>
       </Card>
@@ -71,10 +71,10 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             <Stethoscope className="h-12 w-12 text-white" />
           </div>
           <CardTitle className="text-primary text-xl">
-            🩺 {t("vaidya_dashboard")}
+            🩺 {t("vaidya_dashboard", { ns: "components/ui/LoginCard" })}
           </CardTitle>
           <CardDescription className="text-base">
-            {t("vaidya_dashboard_desc")}
+            {t("vaidya_dashboard_desc", { ns: "components/ui/LoginCard" })}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -84,7 +84,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             data-testid="button-doctor-login"
             onClick={onLogin}
           >
-            {t("doctor_login")}
+            {t("doctor_login", { ns: "components/ui/LoginCard" })}
           </Button>
           <Button
             variant="outline"
@@ -95,7 +95,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
               else window.location.href = "/doctor/register";
             }}
           >
-            {t("register_new_doctor")}
+            {t("register_new_doctor", { ns: "components/ui/LoginCard" })}
           </Button>
         </CardContent>
       </Card>
@@ -112,10 +112,10 @@ export const LoginCard: React.FC<LoginCardProps> = ({
           <Building2 className="h-12 w-12 text-white" />
         </div>
         <CardTitle className="text-primary text-xl">
-          🏛️ {t("admin_panel")}
+          🏛️ {t("admin_panel", { ns: "components/ui/LoginCard" })}
         </CardTitle>
         <CardDescription className="text-base">
-          {t("admin_panel_desc")}
+          {t("admin_panel_desc", { ns: "components/ui/LoginCard" })}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -125,7 +125,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
           data-testid="button-admin-login"
           onClick={onLogin}
         >
-          {t("admin_login")}
+          {t("admin_login", { ns: "components/ui/LoginCard" })}
         </Button>
         <Button
           variant="outline"
@@ -133,7 +133,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
           data-testid="button-admin-register"
           onClick={onRegister}
         >
-          {t("register_new_hospital")}
+          {t("register_new_hospital", { ns: "components/ui/LoginCard" })}
         </Button>
       </CardContent>
     </Card>

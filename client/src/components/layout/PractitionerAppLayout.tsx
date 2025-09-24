@@ -2,44 +2,40 @@ import React from "react";
 import { ThemeToggle } from "@/lib/ThemeProvider";
 import { Link, useLocation } from "wouter";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import { motion } from "framer-motion";
 
-interface DoctorAppLayoutProps {
+interface PractitionerAppLayoutProps {
   children: React.ReactNode;
   showSidebar?: boolean;
 }
 
-const doctorMenuItems = [
+const practitionerMenuItems = [
   {
     label: "Dashboard",
     icon: <DashboardIcon fontSize="small" />,
-    href: "/doctor/dashboard",
+    href: "/practitioner/dashboard",
   },
   {
     label: "Prakriti Verification",
     icon: <AssessmentIcon fontSize="small" />,
-    href: "/doctor/prakriti-verification",
+    href: "/practitioner/prakriti-verification",
   },
   {
     label: "Diet Chart Generator",
     icon: <RestaurantMenuIcon fontSize="small" />,
-    href: "/doctor/diet-chart-generator",
+    href: "/practitioner/diet-chart-generator",
   },
   {
     label: "Monitoring",
     icon: <MonitorHeartIcon fontSize="small" />,
-    href: "/doctor/monitoring",
+    href: "/practitioner/monitoring",
   },
 ];
 
-export const DoctorAppLayout: React.FC<DoctorAppLayoutProps> = ({
+export const PractitionerAppLayout: React.FC<PractitionerAppLayoutProps> = ({
   children,
   showSidebar = true,
 }) => {
@@ -54,11 +50,14 @@ export const DoctorAppLayout: React.FC<DoctorAppLayoutProps> = ({
           </div>
           <nav className="p-4">
             <ul className="space-y-2">
-              {doctorMenuItems.map((item) => (
+              {practitionerMenuItems.map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href}>
-                    <motion.a
-                      whileHover={{ scale: 1.04, backgroundColor: "#e3f2fd" }}
+                  <motion.div
+                    whileHover={{ scale: 1.04, backgroundColor: "#e3f2fd" }}
+                    className="rounded-lg"
+                  >
+                    <Link
+                      href={item.href}
                       className={`flex items-center p-2 rounded-lg relative transition-all duration-200 text-sidebar-foreground ${
                         location === item.href
                           ? "font-semibold text-primary"
@@ -81,8 +80,8 @@ export const DoctorAppLayout: React.FC<DoctorAppLayoutProps> = ({
                       )}
                       {item.icon}
                       <span className="ml-3">{item.label}</span>
-                    </motion.a>
-                  </Link>
+                    </Link>
+                  </motion.div>
                 </li>
               ))}
             </ul>
@@ -139,4 +138,4 @@ export const DoctorAppLayout: React.FC<DoctorAppLayoutProps> = ({
   );
 };
 
-export default DoctorAppLayout;
+export default PractitionerAppLayout;

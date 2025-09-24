@@ -19,7 +19,7 @@ const mockHealthRecords = [
     details: `
       <b>Test:</b> Complete Blood Count, Lipid Profile<br/>
       <b>Findings:</b> All values within normal range except LDL cholesterol (borderline high).<br/>
-      <b>Doctor's Note:</b> Maintain current diet, increase physical activity, recheck in 6 months.`,
+  <b>Practitioner's Note:</b> Maintain current diet, increase physical activity, recheck in 6 months.`,
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const mockHealthRecords = [
     details: `
       <b>Test:</b> Chest X-Ray<br/>
       <b>Findings:</b> Clear lungs, no signs of infection or mass.<br/>
-      <b>Doctor's Note:</b> No action needed.`,
+  <b>Practitioner's Note:</b> No action needed.`,
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const mockHealthRecords = [
     details: `
       <b>Test:</b> Blood Pressure<br/>
       <b>Findings:</b> 135/88 mmHg<br/>
-      <b>Doctor's Note:</b> Reduce salt intake, regular exercise, monitor weekly.`,
+  <b>Practitioner's Note:</b> Reduce salt intake, regular exercise, monitor weekly.`,
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ const mockHealthRecords = [
     details: `
       <b>Test:</b> RT-PCR for SARS-CoV-2<br/>
       <b>Findings:</b> Negative<br/>
-      <b>Doctor's Note:</b> Continue precautions.`,
+  <b>Practitioner's Note:</b> Continue precautions.`,
   },
 ];
 

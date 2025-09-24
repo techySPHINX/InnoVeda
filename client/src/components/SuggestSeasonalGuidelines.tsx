@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SeasonalGuideline {
   season_id: string;
@@ -47,6 +48,7 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
   onClose,
   onSend,
 }) => {
+  const { t } = useTranslation(["components/SuggestSeasonalGuidelines"]);
   const [guideline, setGuideline] = useState<SeasonalGuideline | null>(null);
   const [editableGuideline, setEditableGuideline] =
     useState<SeasonalGuideline | null>(null);
@@ -63,7 +65,15 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
     setEditableGuideline({ ...found });
   }, [patient]);
 
-  if (!editableGuideline) return <div>Loading guidelines...</div>;
+  if (!editableGuideline)
+    return (
+      <div>
+        {t("loading", {
+          ns: "components/SuggestSeasonalGuidelines",
+          defaultValue: "Loading guidelines...",
+        })}
+      </div>
+    );
 
   const handleChange = (field: keyof SeasonalGuideline, value: any) => {
     setEditableGuideline((prev) => (prev ? { ...prev, [field]: value } : prev));
@@ -73,22 +83,43 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
         <h2 className="text-xl font-bold mb-2">
-          Suggest Seasonal Guidelines for {patient.name}
+          {t("title", { ns: "components/SuggestSeasonalGuidelines" })}{" "}
+          {patient.name}
         </h2>
         <div className="mb-2">
-          <label className="font-semibold">Season:</label>{" "}
+          <label className="font-semibold">
+            {t("season", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Season:",
+            })}
+          </label>{" "}
           {editableGuideline.season_name}
         </div>
         <div className="mb-2">
-          <label className="font-semibold">Region:</label>{" "}
+          <label className="font-semibold">
+            {t("region", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Region:",
+            })}
+          </label>{" "}
           {editableGuideline.region}
         </div>
         <div className="mb-2">
-          <label className="font-semibold">Dosha Focus:</label>{" "}
+          <label className="font-semibold">
+            {t("dosha_focus", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Dosha Focus:",
+            })}
+          </label>{" "}
           {editableGuideline.dosha_focus}
         </div>
         <div className="mb-2">
-          <label className="font-semibold">Recommended Foods:</label>
+          <label className="font-semibold">
+            {t("recommended_foods", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Recommended Foods:",
+            })}
+          </label>
           <textarea
             className="w-full border rounded p-1"
             value={editableGuideline.recommended_foods.join(", ")}
@@ -101,7 +132,12 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
           />
         </div>
         <div className="mb-2">
-          <label className="font-semibold">Foods to Avoid:</label>
+          <label className="font-semibold">
+            {t("avoided_foods", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Foods to Avoid:",
+            })}
+          </label>
           <textarea
             className="w-full border rounded p-1"
             value={editableGuideline.avoided_foods.join(", ")}
@@ -114,7 +150,12 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
           />
         </div>
         <div className="mb-2">
-          <label className="font-semibold">General Guidelines:</label>
+          <label className="font-semibold">
+            {t("general_guidelines", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "General Guidelines:",
+            })}
+          </label>
           <textarea
             className="w-full border rounded p-1"
             value={editableGuideline.general_guidelines}
@@ -122,7 +163,12 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
           />
         </div>
         <div className="mb-2">
-          <label className="font-semibold">Lifestyle Recommendations:</label>
+          <label className="font-semibold">
+            {t("lifestyle_recommendations", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Lifestyle Recommendations:",
+            })}
+          </label>
           <textarea
             className="w-full border rounded p-1"
             value={editableGuideline.lifestyle_recommendations || ""}
@@ -132,7 +178,12 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
           />
         </div>
         <div className="mb-2">
-          <label className="font-semibold">Allergy Precautions:</label>
+          <label className="font-semibold">
+            {t("seasonal_allergies_precautions", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Allergy Precautions:",
+            })}
+          </label>
           <textarea
             className="w-full border rounded p-1"
             value={editableGuideline.seasonal_allergies_precautions || ""}
@@ -143,13 +194,19 @@ const SuggestSeasonalGuidelines: React.FC<SuggestSeasonalGuidelinesProps> = ({
         </div>
         <div className="flex justify-end gap-2 mt-4">
           <button className="px-4 py-2 bg-gray-300 rounded" onClick={onClose}>
-            Cancel
+            {t("cancel", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Cancel",
+            })}
           </button>
           <button
             className="px-4 py-2 bg-green-600 text-white rounded"
             onClick={() => onSend(editableGuideline)}
           >
-            Send to Patient
+            {t("submit", {
+              ns: "components/SuggestSeasonalGuidelines",
+              defaultValue: "Send to Patient",
+            })}
           </button>
         </div>
       </div>

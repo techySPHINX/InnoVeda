@@ -9,7 +9,7 @@ import { ThemeProvider } from "./lib/ThemeProvider";
 
 // Layout + Pages
 import AppLayout from "./components/layout/AppLayout";
-import DoctorAppLayout from "./components/layout/DoctorAppLayout";
+import PractitionerAppLayout from "./components/layout/PractitionerAppLayout";
 import NotFound from "@/pages/not-found";
 import LandingPage from "./components/LandingPage";
 import LoginForm from "./components/LoginForm";
@@ -22,9 +22,12 @@ import PatientReports from "./components/PatientReports";
 import PatientProfile from "./components/PatientProfile";
 import PatientSettings from "./components/PatientSettings";
 import PatientAppointments from "./components/PatientAppointments";
-import DoctorDashboard from "./components/DoctorDashboard";
+import PractitionerDashboard from "./components/PractitionerDashboard";
 import AdminDashboard from "./components/AdminDashboard";
-import DoctorRegistration from "./components/DoctorRegistration";
+import PrakritiFinalization from "./components/PrakritiFinalization";
+import WellnessCenterNetwork from "./components/WellnessCenterNetwork";
+import AdminAppLayout from "./components/layout/AdminAppLayout";
+import PractitionerRegistration from "./components/PractitionerRegistration";
 import PrakritiVerification from "./components/PrakritiVerification";
 import DietChartGenerator from "./components/DietChartGenerator";
 import Monitoring from "./components/Monitoring";
@@ -74,28 +77,40 @@ const PatientAppointmentsPage = () => (
   </AppLayout>
 );
 
-const DoctorDashboardPage = () => (
-  <DoctorAppLayout>
-    <DoctorDashboard />
-  </DoctorAppLayout>
+const PractitionerDashboardPage = () => (
+  <PractitionerAppLayout>
+    <PractitionerDashboard />
+  </PractitionerAppLayout>
 );
 
 // const DietChartCreationPage = () => (
-//   <DoctorAppLayout>
+//   <PractitionerAppLayout>
 //     <DietChartCreation />
-//   </DoctorAppLayout>
+//   </PractitionerAppLayout>
 // );
 
 const AdminDashboardPage = () => (
-  <AppLayout userType="admin">
+  <AdminAppLayout>
     <AdminDashboard />
-  </AppLayout>
+  </AdminAppLayout>
+);
+
+const AdminPrakritiFinalizationPage = () => (
+  <AdminAppLayout>
+    <PrakritiFinalization />
+  </AdminAppLayout>
+);
+
+const AdminWellnessNetworkPage = () => (
+  <AdminAppLayout>
+    <WellnessCenterNetwork />
+  </AdminAppLayout>
 );
 
 const PrakritiVerificationPage = () => (
-  <DoctorAppLayout>
+  <PractitionerAppLayout>
     <PrakritiVerification />
-  </DoctorAppLayout>
+  </PractitionerAppLayout>
 );
 
 //
@@ -138,33 +153,47 @@ function Router() {
       <Route path="/patient/settings" component={PatientSettingsPage} />
       <Route path="/patient/appointments" component={PatientAppointmentsPage} />
 
-      {/* Doctor Routes */}
-      <Route path="/doctor/dashboard" component={DoctorDashboardPage} />
-      {/* <Route path="/doctor/diet-chart" component={DietChartCreationPage} /> */}
-      <Route path="/doctor/register" component={() => <DoctorRegistration />} />
+      {/* Practitioner Routes */}
       <Route
-        path="/doctor/prakriti-verification"
+        path="/practitioner/dashboard"
+        component={PractitionerDashboardPage}
+      />
+      {/* <Route path="/practitioner/diet-chart" component={DietChartCreationPage} /> */}
+      <Route
+        path="/practitioner/register"
+        component={() => <PractitionerRegistration />}
+      />
+      <Route
+        path="/practitioner/prakriti-verification"
         component={PrakritiVerificationPage}
       />
       <Route
-        path="/doctor/diet-chart-generator"
+        path="/practitioner/diet-chart-generator"
         component={() => (
-          <DoctorAppLayout>
+          <PractitionerAppLayout>
             <DietChartGenerator />
-          </DoctorAppLayout>
+          </PractitionerAppLayout>
         )}
       />
       <Route
-        path="/doctor/monitoring"
+        path="/practitioner/monitoring"
         component={() => (
-          <DoctorAppLayout>
+          <PractitionerAppLayout>
             <Monitoring />
-          </DoctorAppLayout>
+          </PractitionerAppLayout>
         )}
       />
 
       {/* Admin Routes */}
       <Route path="/admin/dashboard" component={AdminDashboardPage} />
+      <Route
+        path="/admin/prakriti-finalization"
+        component={AdminPrakritiFinalizationPage}
+      />
+      <Route
+        path="/admin/wellness-network"
+        component={AdminWellnessNetworkPage}
+      />
 
       {/* Fallback */}
       <Route component={NotFound} />

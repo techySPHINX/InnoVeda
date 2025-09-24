@@ -1,4 +1,4 @@
-import React from "react";
+import React, { startTransition } from "react";
 import { useTranslation } from "react-i18next";
 
 const LanguageSwitcher: React.FC = () => {
@@ -18,11 +18,13 @@ const LanguageSwitcher: React.FC = () => {
   ];
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = e.target.value;
-    if (selected === "en") {
-      i18n.changeLanguage("en");
-    } else {
-      i18n.changeLanguage("hi");
-    }
+    startTransition(() => {
+      if (selected === "en") {
+        i18n.changeLanguage("en");
+      } else {
+        i18n.changeLanguage("hi");
+      }
+    });
   };
   return (
     <div

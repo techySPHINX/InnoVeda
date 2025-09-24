@@ -201,11 +201,13 @@ const prakritiDistribution = [
   { name: "Kapha", value: 25, color: "#ffd166" },
 ];
 
-interface DoctorDashboardProps {
+interface PractitionerDashboardProps {
   onNavigate?: (view: string) => void;
 }
 
-export default function DoctorDashboard({ onNavigate }: DoctorDashboardProps) {
+export default function PractitionerDashboard({
+  onNavigate,
+}: PractitionerDashboardProps) {
   // Reschedule Modal State
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
   const [rescheduleForm, setRescheduleForm] = useState({
